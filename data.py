@@ -2,6 +2,7 @@ import xlrd
 import numpy as np
 import statistics
 from scipy.stats import linregress
+from sklearn import linear_model
 from matplotlib import pyplot
 
 loc = ("power_data.xlsx")
@@ -66,26 +67,50 @@ for i in cols:
 	print("StDev: " + str(statistics.stdev(i)))
 	
 	#Calulcates the correlation coefficients
-	print("Corr. Coeff.: " + str(np.corrcoef(cols[4], i)) + "\n")
+	print("Corr. Coeff.: " + str(np.corrcoef(cols[4], i)))
 
 	#Normalizes our data
 	norm_list = []
 	for num in i:
 		norm_list.append((num - min(i))/(max(i)-min(i)))
 	train_norm.append(norm_list)
+	
 	x += 1
 
+
+#Obtaining our linear regression constants 
+#One input variable
+r = linregress(train_norm[0], train_norm[4])	
+print("Slope: " + str(r.slope))
+print("Intercept: " + str(r.intercept) + "\n")
+
+#Two input variables
+a = np.array([train_norm[0], train_norm[1]])
+a = a.reshape((7500, 2))
+r = linear_model.LinearRegression()
+r.fit(a, train_norm[4])
+print("Coefficients: " + str(r.coef_))
+print("Intercept: " + str(r.intercept_) + "\n")
+
+#Three input variables
+a = np.array([train_norm[0], train_norm[1], train_norm[2]])
+a = a.reshape((7500, 3))
+r = linear_model.LinearRegression()
+r.fit(a, train_norm[4])
+print("Coefficients: " + str(r.coef_))
+print("Intercept: " + str(r.intercept_) + "\n")
+
+
+
 #A scatter plot that shows linear regression
-x = train_norm[0]
-y = train_norm[4]
-
-print(linregress(x,y))
-
-coef = np.polyfit(x,y,1)
-poly1d_fn = np.poly1d(coef) 
-
-pyplot.plot(x,y, 'yo', x, poly1d_fn(x), '--k')
-pyplot.show()
+#x = train_norm[0]
+#y = train_norm[4]
+#
+#coef = np.polyfit(x,y,1)
+#poly1d_fn = np.poly1d(coef) 
+#
+#pyplot.plot(x,y, 'yo', x, poly1d_fn(x), '--k')
+#pyplot.show()
 #Creates a scatter plot of our data.
 #pyplot.scatter(cols[0], cols[4])
 #pyplot.show()
