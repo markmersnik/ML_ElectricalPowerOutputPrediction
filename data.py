@@ -198,15 +198,22 @@ print("MSE5: " + str(mse5/150))
 print("MSE6: " + str(mse6/150))
 print("MSE7: " + str(mse7/150))
 
+
+#Nonlinear regression model
+
+
+
+
+
 #A scatter plot that shows linear regression
-#x = train_norm[0]
+#x = train_norm[0] 
 #y = train_norm[4]
 #
 #coef = np.polyfit(x,y,1)
 #poly1d_fn = np.poly1d(coef) 
 #
-#pyplot.plot(x,y, 'yo', x, poly1d_fn(x), '--k')
+#pyplot.plot(x, train_norm[1], train_norm[2], train_norm[3],y, 'yo', x, poly1d_fn(x), '--k')
 #pyplot.show()
-#Creates a scatter plot of our data.
+#^Creates a scatter plot of our data.
 #pyplot.scatter(cols[0], cols[4])
 #pyplot.show()
