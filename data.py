@@ -79,52 +79,52 @@ for i in cols:
 
 #Obtaining our linear regression constants 
 #One input variable
-r = linregress(train_norm[0], train_norm[4])	
+r1 = linregress(train_norm[0], train_norm[4])	
 print("One input variable:")
-print("Slope: " + str(r.slope))
-print("Intercept: " + str(r.intercept))
+print("Slope: " + str(r1.slope))
+print("Intercept: " + str(r1.intercept))
 
-r = linregress(train_norm[1], train_norm[4])	
-print("Slope: " + str(r.slope))
-print("Intercept: " + str(r.intercept))
+r2 = linregress(train_norm[1], train_norm[4])	
+print("Slope: " + str(r1.slope))
+print("Intercept: " + str(r1.intercept))
 
-r = linregress(train_norm[2], train_norm[4])	
-print("Slope: " + str(r.slope))
-print("Intercept: " + str(r.intercept) + "\n")
+r3 = linregress(train_norm[2], train_norm[4])	
+print("Slope: " + str(r1.slope))
+print("Intercept: " + str(r1.intercept) + "\n")
 
 
 #Two input variables
 print("Two input variables:")
 a = np.array([train_norm[0], train_norm[1]])
 a = a.reshape((7500, 2))
-r = linear_model.LinearRegression()
-r.fit(a, train_norm[4])
-print("Coefficients: " + str(r.coef_))
-print("Intercept: " + str(r.intercept_))
+r4 = linear_model.LinearRegression()
+r4.fit(a, train_norm[4])
+print("Coefficients: " + str(r4.coef_))
+print("Intercept: " + str(r4.intercept_))
 
 a = np.array([train_norm[0], train_norm[2]])
 a = a.reshape((7500, 2))
-r = linear_model.LinearRegression()
-r.fit(a, train_norm[4])
-print("Coefficients: " + str(r.coef_))
-print("Intercept: " + str(r.intercept_))
+r5 = linear_model.LinearRegression()
+r5.fit(a, train_norm[4])
+print("Coefficients: " + str(r5.coef_))
+print("Intercept: " + str(r5.intercept_))
 
 a = np.array([train_norm[1], train_norm[2]])
 a = a.reshape((7500, 2))
-r = linear_model.LinearRegression()
-r.fit(a, train_norm[4])
-print("Coefficients: " + str(r.coef_))
-print("Intercept: " + str(r.intercept_) + "\n")
+r6 = linear_model.LinearRegression()
+r6.fit(a, train_norm[4])
+print("Coefficients: " + str(r6.coef_))
+print("Intercept: " + str(r6.intercept_) + "\n")
 
 
 #Three input variables
 print("Three input variables:")
 a = np.array([train_norm[0], train_norm[1], train_norm[2]])
 a = a.reshape((7500, 3))
-r = linear_model.LinearRegression()
-r.fit(a, train_norm[4])
-print("Coefficients: " + str(r.coef_))
-print("Intercept: " + str(r.intercept_) + "\n")
+r7 = linear_model.LinearRegression()
+r7.fit(a, train_norm[4])
+print("Coefficients: " + str(r7.coef_))
+print("Intercept: " + str(r7.intercept_) + "\n")
 
 
 #Normalizing the test data
@@ -135,17 +135,46 @@ for i in test:
 		norm_list.append((num - min(i))/(max(i)-min(i)))
 	test_norm.append(norm_list)
 
-constants = r.coef_	
+c4 = r4.coef_	
+c5 = r5.coef_	
+c6 = r6.coef_	
+c7 = r7.coef_	
 result = []
 x1 = test_norm[0]
 x2 = test_norm[1]
 x3 = test_norm[2]
 comp = test_norm[4]
-mse = 0 
+mse1 = mse2 = mse3 = mse4 = mse5 = mse6 = mse7 = 0 
 for i in range(0,150):
-	output = r.intercept_ + x1[i]*constants[0] + x2[i]*constants[1] + x3[i]*constants[2]
-	mse += (comp[i] - output)
-print("MSE7: " + str(mse/150))
+
+	output1 = r1.slope * x1[i] + r1.intercept
+	mse1 += (comp[i] - output1)
+
+	output2 = r2.slope * x2[i] + r2.intercept
+	mse2 += (comp[i] - output2)
+
+	output3 = r3.slope * x3[i] + r3.intercept
+	mse3 += (comp[i] - output3)
+
+	output4 = r4.intercept_ + x1[i]*c4[0] + x2[i]*c4[1]
+	mse4 += (comp[i] - output4)
+
+	output5 = r5.intercept_ + x1[i]*c5[0] + x2[i]*c5[1]
+	mse5 += (comp[i] - output5)
+
+	output6 = r6.intercept_ + x1[i]*c6[0] + x2[i]*c6[1]
+	mse6 += (comp[i] - output6)
+
+	output7 = r7.intercept_ + x1[i]*c7[0] + x2[i]*c7[1] + x3[i]*c7[2]
+	mse7 += (comp[i] - output7)
+
+print("MSE1: " + str(mse1/150))
+print("MSE2: " + str(mse2/150))
+print("MSE3: " + str(mse3/150))
+print("MSE4: " + str(mse4/150))
+print("MSE5: " + str(mse5/150))
+print("MSE6: " + str(mse6/150))
+print("MSE7: " + str(mse7/150))
 
 #A scatter plot that shows linear regression
 #x = train_norm[0]
