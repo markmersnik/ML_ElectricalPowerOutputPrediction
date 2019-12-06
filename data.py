@@ -48,8 +48,10 @@ labels = [l1, l2, l3, l4, l5]
 
 #Normalized data sets
 train_norm = []
+test_norm = []
 
-#Calculates all of the basic statistics for our inputs and output.
+#Calculates all of the basic statistics for our inputs and output. (Training Data)
+print("<TRAINING DATA>")
 x = 0
 for i in cols:
 
@@ -76,6 +78,34 @@ for i in cols:
 	
 	x += 1
 
+
+
+#Calculates all of the basic statistics for our inputs and output. (Test Data)
+print("<TEST DATA>")
+x = 0
+for i in test:
+
+	sum = 0
+	l = labels[x]
+	print(str(l[0]))
+	print("Mean: " + str(statistics.mean(i)))
+	print("Median: " + str(statistics.median(i)))
+	print("Mode: " + str(max(set(i), key=i.count)))
+	print("Min: " + str(min(i)))
+	print("Max: " + str(max(i)))
+	print("Variance: " + str(statistics.variance(i)))
+	print("StDev: " + str(statistics.stdev(i)))
+	
+	#Calulcates the correlation coefficients
+	print("Corr. Coeff.: " + str(np.corrcoef(test[4], i)) + "\n")
+
+	#Normalizes our data
+	norm_list = []
+	for num in i:
+		norm_list.append((num - min(i))/(max(i)-min(i)))
+	test_norm.append(norm_list)
+	
+	x += 1
 
 #Obtaining our linear regression constants 
 #One input variable
@@ -126,15 +156,7 @@ r7.fit(a, train_norm[4])
 print("Coefficients: " + str(r7.coef_))
 print("Intercept: " + str(r7.intercept_) + "\n")
 
-
-#Normalizing the test data
-test_norm = []
-for i in test: 
-	norm_list = []
-	for num in i:
-		norm_list.append((num - min(i))/(max(i)-min(i)))
-	test_norm.append(norm_list)
-
+#Making predictions on test data and calculating mean squared error (MSE)
 c4 = r4.coef_	
 c5 = r5.coef_	
 c6 = r6.coef_	
