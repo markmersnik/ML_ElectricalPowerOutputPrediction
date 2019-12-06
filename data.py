@@ -67,7 +67,7 @@ for i in cols:
 	print("StDev: " + str(statistics.stdev(i)))
 	
 	#Calulcates the correlation coefficients
-	print("Corr. Coeff.: " + str(np.corrcoef(cols[4], i)))
+	print("Corr. Coeff.: " + str(np.corrcoef(cols[4], i)) + "\n")
 
 	#Normalizes our data
 	norm_list = []
@@ -82,7 +82,16 @@ for i in cols:
 #One input variable
 r = linregress(train_norm[0], train_norm[4])	
 print("Slope: " + str(r.slope))
+print("Intercept: " + str(r.intercept))
+
+r = linregress(train_norm[1], train_norm[4])	
+print("Slope: " + str(r.slope))
+print("Intercept: " + str(r.intercept))
+
+r = linregress(train_norm[2], train_norm[4])	
+print("Slope: " + str(r.slope))
 print("Intercept: " + str(r.intercept) + "\n")
+
 
 #Two input variables
 a = np.array([train_norm[0], train_norm[1]])
@@ -90,7 +99,22 @@ a = a.reshape((7500, 2))
 r = linear_model.LinearRegression()
 r.fit(a, train_norm[4])
 print("Coefficients: " + str(r.coef_))
+print("Intercept: " + str(r.intercept_))
+
+a = np.array([train_norm[0], train_norm[2]])
+a = a.reshape((7500, 2))
+r = linear_model.LinearRegression()
+r.fit(a, train_norm[4])
+print("Coefficients: " + str(r.coef_))
+print("Intercept: " + str(r.intercept_))
+
+a = np.array([train_norm[1], train_norm[2]])
+a = a.reshape((7500, 2))
+r = linear_model.LinearRegression()
+r.fit(a, train_norm[4])
+print("Coefficients: " + str(r.coef_))
 print("Intercept: " + str(r.intercept_) + "\n")
+
 
 #Three input variables
 a = np.array([train_norm[0], train_norm[1], train_norm[2]])
