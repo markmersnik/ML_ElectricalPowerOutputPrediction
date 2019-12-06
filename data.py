@@ -48,7 +48,6 @@ labels = [l1, l2, l3, l4, l5]
 
 #Normalized data sets
 train_norm = []
-test_norm = []
 
 #Calculates all of the basic statistics for our inputs and output.
 x = 0
@@ -125,6 +124,13 @@ print("Coefficients: " + str(r.coef_))
 print("Intercept: " + str(r.intercept_) + "\n")
 
 
+#Normalizing the test data
+test_norm = []
+for i in test: 
+	norm_list = []
+	for num in i:
+		norm_list.append((num - min(i))/(max(i)-min(i)))
+	test_norm.append(norm_list)
 
 #A scatter plot that shows linear regression
 #x = train_norm[0]
