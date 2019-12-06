@@ -80,6 +80,7 @@ for i in cols:
 #Obtaining our linear regression constants 
 #One input variable
 r = linregress(train_norm[0], train_norm[4])	
+print("One input variable:")
 print("Slope: " + str(r.slope))
 print("Intercept: " + str(r.intercept))
 
@@ -93,6 +94,7 @@ print("Intercept: " + str(r.intercept) + "\n")
 
 
 #Two input variables
+print("Two input variables:")
 a = np.array([train_norm[0], train_norm[1]])
 a = a.reshape((7500, 2))
 r = linear_model.LinearRegression()
@@ -116,6 +118,7 @@ print("Intercept: " + str(r.intercept_) + "\n")
 
 
 #Three input variables
+print("Three input variables:")
 a = np.array([train_norm[0], train_norm[1], train_norm[2]])
 a = a.reshape((7500, 3))
 r = linear_model.LinearRegression()
@@ -131,6 +134,18 @@ for i in test:
 	for num in i:
 		norm_list.append((num - min(i))/(max(i)-min(i)))
 	test_norm.append(norm_list)
+
+constants = r.coef_	
+result = []
+x1 = test_norm[0]
+x2 = test_norm[1]
+x3 = test_norm[2]
+comp = test_norm[4]
+mse = 0 
+for i in range(0,150):
+	output = r.intercept_ + x1[i]*constants[0] + x2[i]*constants[1] + x3[i]*constants[2]
+	mse += (comp[i] - output)
+print("MSE7: " + str(mse/150))
 
 #A scatter plot that shows linear regression
 #x = train_norm[0]
