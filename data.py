@@ -196,7 +196,7 @@ print("MSE3: " + str(mse3/150))
 print("MSE4: " + str(mse4/150))
 print("MSE5: " + str(mse5/150))
 print("MSE6: " + str(mse6/150))
-print("MSE7: " + str(mse7/150))
+print("MSE7: " + str(mse7/150) + " (Best - three input  variables)")
 
 
 #Nonlinear regression model
