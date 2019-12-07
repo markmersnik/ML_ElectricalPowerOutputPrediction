@@ -214,6 +214,6 @@ print("MSE7: " + str(mse7/150))
 #
 #pyplot.plot(x, train_norm[1], train_norm[2], train_norm[3],y, 'yo', x, poly1d_fn(x), '--k')
 #pyplot.show()
-#^Creates a scatter plot of our data.
+#Creates a scatter plot of our data.
 #pyplot.scatter(cols[0], cols[4])
 #pyplot.show()
