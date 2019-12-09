@@ -116,12 +116,12 @@ print("Slope: " + str(r1.slope))
 print("Intercept: " + str(r1.intercept))
 
 r2 = linregress(train_norm[1], train_norm[4])	
-print("Slope: " + str(r1.slope))
-print("Intercept: " + str(r1.intercept))
+print("Slope: " + str(r2.slope))
+print("Intercept: " + str(r2.intercept))
 
 r3 = linregress(train_norm[2], train_norm[4])	
-print("Slope: " + str(r1.slope))
-print("Intercept: " + str(r1.intercept) + "\n")
+print("Slope: " + str(r3.slope))
+print("Intercept: " + str(r3.intercept) + "\n")
 
 
 #Two input variables
@@ -202,16 +202,30 @@ print("MSE7: " + str(mse7/150) + " (Best - three input  variables)")
 
 #Nonlinear regression model
 #Nonlinear least squares curve fitting
-def f(x1, x2, x3, x4):
-	a = np.array([cols[0], cols[1], cols[2], cols[3]])
-	a = a.reshape((7500, 4))
-	r7 = linear_model.LogisticRegression()
-	r7.fit(a, cols[4])
-	b = np.array([x1, x2, x3, x4])
-	print(r7.predict(b))
+z_norm = []
+for i in train_norm[4]:
+	if(i == 0):
+		z_norm.append(0)
+	else:
+		check = 1/i - 1
+		if(check == 0):
+			z_norm.append(0)
+		else:
+			temp = -np.log(1/i - 1)	
+#			if(np.isnan(temp)):
+#				temp = np.nan_to_num(temp)
+			z_norm.append(temp)
 
-f(test_norm[0], test_norm[1], test_norm[2], test_norm[3])	
-	
+print(z_norm)
+def f(z):
+	a = np.array([train_norm[0], train_norm[1], train_norm[2]]) #, train_norm[3]])
+	a = a.reshape((7500, 3))
+	r7 = linear_model.LinearRegression()
+	r7.fit(a, z)
+	print("Coefficients: " + str(r7.coef_))
+	print("Intercept: " + str(r7.intercept_) + "\n")
+
+f(z_norm)	
 	
 
 
