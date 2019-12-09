@@ -4,6 +4,7 @@ import statistics
 from scipy.stats import linregress
 from sklearn import linear_model
 from matplotlib import pyplot
+import pandas as pd
 
 loc = ("power_data.xlsx")
 
@@ -201,6 +202,17 @@ print("MSE7: " + str(mse7/150) + " (Best - three input  variables)")
 
 #Nonlinear regression model
 #Nonlinear least squares curve fitting
+def f(x1, x2, x3, x4):
+	a = np.array([cols[0], cols[1], cols[2], cols[3]])
+	a = a.reshape((7500, 4))
+	r7 = linear_model.LogisticRegression()
+	r7.fit(a, cols[4])
+	b = np.array([x1, x2, x3, x4])
+	print(r7.predict(b))
+
+f(test_norm[0], test_norm[1], test_norm[2], test_norm[3])	
+	
+	
 
 
 
