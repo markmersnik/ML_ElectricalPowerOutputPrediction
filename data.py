@@ -118,12 +118,12 @@ print("Slope: " + str(r1.slope))
 print("Intercept: " + str(r1.intercept))
 
 r2 = linregress(train_norm[1], train_norm[4])	
-print("Slope: " + str(r1.slope))
-print("Intercept: " + str(r1.intercept))
+print("Slope: " + str(r2.slope))
+print("Intercept: " + str(r2.intercept))
 
 r3 = linregress(train_norm[2], train_norm[4])	
-print("Slope: " + str(r1.slope))
-print("Intercept: " + str(r1.intercept) + "\n")
+print("Slope: " + str(r3.slope))
+print("Intercept: " + str(r3.intercept) + "\n")
 
 
 #Two input variables
@@ -202,42 +202,33 @@ print("MSE6: " + str(mse6/150))
 print("MSE7: " + str(mse7/150) + " (Best - three input  variables)")
 
 
-LR = [1547  659 3107 1777  633 3107 3863 1617  830 1617 3441 3219 3023 3356
- 3567  830  756 3811 1476 1617 1025  528 3277 3107 1099 3811 1120 3219
-  830 3244 1097 2867 2012 2145 1763 3863  830 2393 1269 3390 1796 3488
- 2758  997 3023 3004 2733 2056  385 2665 3364  965 3107 3018 3283 2620
- 1040 1951 2088 2689  752 3107 2052 2769 1222  598 1097 2737 3474 3023
- 3107 1008 1150 3204 3474 2012 1459 3700  639 1405 2046  615  673 3107
- 1197 3274 1617 1617 3559 2831 3107  830 3219  788 1459 3744  830  528
-  528  709 1405 1197 3744 1025 3107 3559 3650 3107 1040  481  955  528
- 1986  830  824 2922  481 1617  148 2822 1438 1020 1120 1396 3642  830
- 1617 3283 1120 2560  878 1617 1617  659 1617 1295 3107  528 1279 1396
- 3356 3802 2560 2922 1120 1979 3107 3559 1099  830]
-
-out = 0
-for i in range(0, 150):
-	out += comp[i] - LR[i]
-
-print("MSELR: " + str(out/150))
 
 #Nonlinear regression model
 #Nonlinear least squares curve fitting
-def f(x1, x2, x3, x4):
-	le = preprocessing.LabelEncoder()
-	x = 0
-	for i in cols:
-		cols[x] = le.fit_transform(i)
-		x += 1
-	a = np.array([cols[0], cols[1], cols[2], cols[3]])
-	a = a.reshape((7500, 4))
-	r7 = linear_model.LogisticRegression()
-	r7.fit(a, cols[4])
-	b = np.array([x1, x2, x3, x4])
-	b = b.reshape((150,4))
-	print(r7.predict(b))
+z_norm = []
+for i in train_norm[4]:
+	if(i == 0):
+		z_norm.append(0)
+	else:
+		check = 1/i - 1
+		if(check == 0):
+			z_norm.append(0)
+		else:
+			temp = -np.log(1/i - 1)	
+#			if(np.isnan(temp)):
+#				temp = np.nan_to_num(temp)
+			z_norm.append(temp)
 
-f(test_norm[0], test_norm[1], test_norm[2], test_norm[3])	
-	
+print(z_norm)
+def f(z):
+	a = np.array([train_norm[0], train_norm[1], train_norm[2]]) #, train_norm[3]])
+	a = a.reshape((7500, 3))
+	r7 = linear_model.LinearRegression()
+	r7.fit(a, z)
+	print("Coefficients: " + str(r7.coef_))
+	print("Intercept: " + str(r7.intercept_) + "\n")
+
+f(z_norm)	
 	
 
 
