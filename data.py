@@ -222,8 +222,8 @@ def f(z):
 	a = a.reshape((7500, 3))
 	r7 = linear_model.LinearRegression()
 	r7.fit(a, z_norm)
-	print("Coefficients: " + str(r7.coef_))
-	print("Intercept: " + str(r7.intercept_) + "\n")
+	print("Non-linear Coefficients: " + str(r7.coef_))
+	print("Non-linear Intercept: " + str(r7.intercept_) + "\n")
 	coef = r7.coef_
 	predicted = []
 	x1 = test_norm[0]
@@ -234,9 +234,9 @@ def f(z):
 	for i in range(0, 150):
 		predicted.append((coef[0]*x1[i]) + (coef[1]*x2[i]) + (coef[2]*x3[i]) + r7.intercept_)
 		predicted[i] = np.exp(predicted[i])/(1+np.exp(predicted[i]))
-		print(str(predicted[i]) + " -----> " + str(actual[i]))
+		#print(str(predicted[i]) + " -----> " + str(actual[i]))
 		mse += actual[i] - predicted[i]
-	print("Final MSE: " + str(mse/150))
+	print("Non-linear MSE: " + str(mse/150))
 	pyplot.scatter(x1, predicted)
 	pyplot.show()
 f(test_norm[4])
