@@ -233,7 +233,7 @@ def f(z):
 	mse = 0
 	for i in range(0, 150):
 		predicted.append((coef[0]*x1[i]) + (coef[1]*x2[i]) + (coef[2]*x3[i]) + r7.intercept_)
-		predicted[i] = np.exp(predicted[i])/(1+predicted[i])
+		predicted[i] = np.exp(predicted[i])/(1+np.exp(predicted[i]))
 		print(str(predicted[i]) + " -----> " + str(actual[i]))
 		mse += actual[i] - predicted[i]
 	print("Final MSE: " + str(mse/150))
