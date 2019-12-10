@@ -82,7 +82,7 @@ for i in cols:
 	x += 1
 
 
-
+print(train_norm[4])
 #Calculates all of the basic statistics for our inputs and output. (Test Data)
 print("<TEST DATA>")
 x = 0
@@ -227,6 +227,10 @@ def f(z):
 	r7.fit(a, z)
 	print("Coefficients: " + str(r7.coef_))
 	print("Intercept: " + str(r7.intercept_) + "\n")
+
+def func(X, a, b, c, d):
+	x1, x2, x3, y = X
+	return 1/(1+np.exp(-(a+b*x1+c*x2+d*x3)))
 
 f(z_norm)	
 	
