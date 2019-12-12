@@ -268,6 +268,8 @@ for i in train_norm[4]:
 			temp = -np.log(1/i - 1)	
 			z_norm.append(temp)
 
+
+#TODO: change non-linear model from sigmoid to tanh or ReLU
 #Calculates the non-linear prediction and the error associated with it.
 def f(z):
 	a = np.array([train_norm[0], train_norm[1], train_norm[2]])
