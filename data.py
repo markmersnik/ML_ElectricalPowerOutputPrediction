@@ -28,11 +28,11 @@ cols = [first_col,
 	fifth_col]
 
 #Test data
-test1_col = sheet.col_values(0,7502,7652)
-test2_col = sheet.col_values(1,7502,7652)
-test3_col = sheet.col_values(2,7502,7652)
-test4_col = sheet.col_values(3,7502,7652) 
-test5_col = sheet.col_values(4,7502,7652) 
+test1_col = sheet.col_values(0,7502)
+test2_col = sheet.col_values(1,7502)
+test3_col = sheet.col_values(2,7502)
+test4_col = sheet.col_values(3,7502) 
+test5_col = sheet.col_values(4,7502) 
 
 test = [test1_col,
 	test2_col,
@@ -170,36 +170,36 @@ x2 = test_norm[1]
 x3 = test_norm[2]
 comp = test_norm[4]
 mse1 = mse2 = mse3 = mse4 = mse5 = mse6 = mse7 = 0 
-for i in range(0,150):
+for i in range(0,2067):
 
 	output1 = r1.slope * x1[i] + r1.intercept
-	mse1 += (comp[i] - output1)
+	mse1 += (comp[i] - output1)**2
 
 	output2 = r2.slope * x2[i] + r2.intercept
-	mse2 += (comp[i] - output2)
+	mse2 += (comp[i] - output2)**2
 
 	output3 = r3.slope * x3[i] + r3.intercept
-	mse3 += (comp[i] - output3)
+	mse3 += (comp[i] - output3)**2
 
 	output4 = r4.intercept_ + x1[i]*c4[0] + x2[i]*c4[1]
-	mse4 += (comp[i] - output4)
+	mse4 += (comp[i] - output4)**2
 
 	output5 = r5.intercept_ + x1[i]*c5[0] + x2[i]*c5[1]
-	mse5 += (comp[i] - output5)
+	mse5 += (comp[i] - output5)**2
 
 	output6 = r6.intercept_ + x1[i]*c6[0] + x2[i]*c6[1]
-	mse6 += (comp[i] - output6)
+	mse6 += (comp[i] - output6)**2
 
 	output7 = r7.intercept_ + x1[i]*c7[0] + x2[i]*c7[1] + x3[i]*c7[2]
-	mse7 += (comp[i] - output7)
+	mse7 += (comp[i] - output7)**2
 
-print("MSE1: " + str(mse1/150))
-print("MSE2: " + str(mse2/150))
-print("MSE3: " + str(mse3/150))
-print("MSE4: " + str(mse4/150))
-print("MSE5: " + str(mse5/150))
-print("MSE6: " + str(mse6/150))
-print("MSE7: " + str(mse7/150) + " (Best - three input  variables)")
+print("MSE1: " + str(mse1/2067))
+print("MSE2: " + str(mse2/2067))
+print("MSE3: " + str(mse3/2067))
+print("MSE4: " + str(mse4/2067))
+print("MSE5: " + str(mse5/2067))
+print("MSE6: " + str(mse6/2067))
+print("MSE7: " + str(mse7/2067) + " (Best - three input  variables)")
 
 
 
@@ -231,12 +231,12 @@ def f(z):
 	x3 = test_norm[2]
 	actual = test_norm[4]
 	mse = 0
-	for i in range(0, 150):
+	for i in range(0, 2067):
 		predicted.append((coef[0]*x1[i]) + (coef[1]*x2[i]) + (coef[2]*x3[i]) + r7.intercept_)
 		predicted[i] = np.exp(predicted[i])/(1+np.exp(predicted[i]))
 		#print(str(predicted[i]) + " -----> " + str(actual[i]))
 		mse += actual[i] - predicted[i]
-	print("Non-linear MSE: " + str(mse/150))
+	print("Non-linear MSE: " + str(mse/2067))
 	pyplot.scatter(x1, predicted)
 	pyplot.show()
 f(test_norm[4])
