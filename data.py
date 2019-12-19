@@ -212,13 +212,15 @@ for i in range(0,2067):
 	mse7 += (comp[i] - output7)**2
 	res7.append(output7)
 
-	print("MSE1: " + str(mse1/2067))
-	print("MSE2: " + str(mse2/2067))
-	print("MSE3: " + str(mse3/2067))
-	print("MSE4: " + str(mse4/2067))
-	print("MSE5: " + str(mse5/2067))
-	print("MSE6: " + str(mse6/2067))
-	print("MSE7: " + str(mse7/2067) + " (Best - three input  variables)")
+print("MSE1: " + str(mse1/2067))
+print("MSE2: " + str(mse2/2067))
+print("MSE3: " + str(mse3/2067))
+print("MSE4: " + str(mse4/2067))
+print("MSE5: " + str(mse5/2067))
+print("MSE6: " + str(mse6/2067))
+print("MSE7: " + str(mse7/2067) + " (Best - three input  variables)")
+
+
 #Calculates R-squared error of our data
 def R2(a, b):
 	mean = statistics.mean(a)
@@ -285,17 +287,30 @@ def f(z):
 	print("Non-linear Intercept: " + str(r8.intercept_) + "\n")
 	coef = r8.coef_
 	predicted = []
+	predicted2 = []
 	x1 = test_norm[0]
 	x2 = test_norm[1]
 	x3 = test_norm[2]
 	actual = test_norm[4]
 	mse = 0
+	mseT = 0
 	for i in range(0, 2067):
 		predicted.append((coef[0]*x1[i]) + (coef[1]*x2[i]) + (coef[2]*x3[i]) + r7.intercept_)
+		predicted2.append((coef[0]*x1[i]) + (coef[1]*x2[i]) + (coef[2]*x3[i]) + r7.intercept_)
+
+		#sigmoid function:
 		predicted[i] = np.exp(predicted[i])/(1+np.exp(predicted[i]))
 		mse += (actual[i] - predicted[i])**2
-	print("Non-linear MSE: " + str(mse/2067))
-	print("Non-linear R^2: " + str(R2(test_norm[4], predicted)))
+
+		#tanh function:
+		predicted2[i] = np.tanh(predicted[i])
+		mseT += (actual[i] - predicted2[i])
+
+	print("non-linear mse: " + str(mse/2067))
+	print("non-linear r^2: " + str(R2(test_norm[4], predicted)) + "\n")
+
+	print("non-linear mseT: " + str(mseT/2067))
+	print("non-linear r^2: " + str(R2(test_norm[4], predicted2)))
 
 f(test_norm[4])
 	
